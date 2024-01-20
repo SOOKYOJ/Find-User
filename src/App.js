@@ -12,18 +12,21 @@ function App() {
 
   useEffect(() => {
     async function jsondata() {
-      const res = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-      const changeData = await res.data;
-      setFindUser(changeData);
+      try {
+        const res = await axios.get('https://jsonplaceholder.typicode.com/users');
+        const changeData = await res.data;
+        const fUser = await changeData.filter((name) => name.username.includes(user));
+        setFindUser(fUser);
+      } catch (error) {
+        console.log(error);
+      }
     }
     jsondata();
-  }, []);
+  }, [user]);
 
   const findData = () => {
-    if (user === findUser.username) {
-      console.log(findUser.name);
-    } else {
-      console.log('잘못 입력하였습니다.');
+    if (user === findUser) {
+      console.log(findUser);
     }
   };
 
