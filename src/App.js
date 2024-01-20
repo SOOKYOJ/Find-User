@@ -25,9 +25,7 @@ function App() {
   }, [user]);
 
   const findData = () => {
-    if (user === findUser) {
-      console.log(findUser);
-    }
+    console.log(findUser);
   };
 
   return (
