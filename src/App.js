@@ -15,7 +15,7 @@ function App() {
       try {
         const res = await axios.get('https://jsonplaceholder.typicode.com/users');
         const changeData = await res.data;
-        const fUser = changeData.filter((name) => name.username.includes(user));
+        const fUser = changeData.find((name) => name.username === user);
         setFindUser(fUser);
       } catch (error) {
         console.log(error);
@@ -25,7 +25,11 @@ function App() {
   }, [user]);
 
   const findData = () => {
-    console.log(findUser);
+    if (findUser.username === user) {
+      console.log(findUser.name);
+    } else {
+      console.log('error');
+    }
   };
 
   return (
