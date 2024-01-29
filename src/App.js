@@ -9,6 +9,8 @@ function App() {
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
+    const filteredUser = users.filter((user) => user.username.includes(e.target.value));
+    setResultUser(filteredUser);
   };
 
   useEffect(() => {
@@ -23,19 +25,19 @@ function App() {
     jsonData();
   }, []);
 
-  const searchUsers = () => {
-    const filteredUser = users.filter((user) => user.username.includes(inputValue));
-    setResultUser(filteredUser);
-  };
+  // const searchUsers = () => {
+  //   const filteredUser = users.filter((user) => user.username.includes(inputValue));
+  //   setResultUser(filteredUser);
+  // };
 
-  useEffect(() => {
-    console.log(resultUser);
-  }, [resultUser]);
+  // useEffect(() => {
+  //   console.log(resultUser);
+  // }, [resultUser]);
 
   return (
     <div className="App">
       <input value={inputValue} onChange={handleInputValue} placeholder="이름을 입력해주세요"></input>
-      <button onClick={searchUsers}>확인</button>
+      {/* <button onClick={searchUsers}>확인</button> */}
       <li style={{ listStyle: 'none' }}>
         {resultUser.map((user) => (
           <ol key={user.id}>{user.username}</ol>
