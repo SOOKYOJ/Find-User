@@ -3,36 +3,44 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [user, setUser] = useState('');
-  const [findUser, setFindUser] = useState('');
+  const [inputValue, setInputValue] = useState('');
+  const [users, setUsers] = useState('');
+  const [resultUser, setResultUser] = useState([]);
 
-  const handleUser = (e) => {
-    setUser(e.target.value);
+  const handleInputValue = (e) => {
+    setInputValue(e.target.value);
   };
 
   useEffect(() => {
-    async function jsondata() {
+    async function jsonData() {
       try {
         const res = await axios.get('https://jsonplaceholder.typicode.com/users');
-        const changeData = await res.data;
-        setFindUser(changeData);
+        setUsers(res.data);
       } catch (error) {
         console.log(error);
       }
     }
-    jsondata();
+    jsonData();
   }, []);
 
-  const findData = async () => {
-    const changeData = await findUser.filter((name) => name.username.includes(user));
-    setFindUser(changeData);
-    console.log(findUser);
+  const searchUsers = () => {
+    const filteredUser = users.filter((user) => user.username.includes(inputValue));
+    setResultUser(filteredUser);
   };
+
+  useEffect(() => {
+    console.log(resultUser);
+  }, [resultUser]);
 
   return (
     <div className="App">
-      <input value={user} onChange={handleUser} placeholder="이름을 입력해주세요"></input>
-      <button onClick={findData}>확인</button>
+      <input value={inputValue} onChange={handleInputValue} placeholder="이름을 입력해주세요"></input>
+      <button onClick={searchUsers}>확인</button>
+      <li style={{ listStyle: 'none' }}>
+        {resultUser.map((user) => (
+          <ol key={user.id}>{user.username}</ol>
+        ))}
+      </li>
     </div>
   );
 }
