@@ -15,16 +15,17 @@ function App() {
       try {
         const res = await axios.get('https://jsonplaceholder.typicode.com/users');
         const changeData = await res.data;
-        const fUser = changeData.find((name) => name.username === user);
-        setFindUser(fUser);
+        setFindUser(changeData);
       } catch (error) {
         console.log(error);
       }
     }
     jsondata();
-  }, [user]);
+  }, []);
 
-  const findData = () => {
+  const findData = async () => {
+    const changeData = await findUser.filter((name) => name.username.includes(user));
+    setFindUser(changeData);
     console.log(findUser);
   };
 
